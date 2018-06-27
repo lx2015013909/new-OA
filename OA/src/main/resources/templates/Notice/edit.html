@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <link href="/css/materialize.css">
+  <link href="/js/materialize.css">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>修改消息</title>
+</head>
+
+<body bgcolor="#FFFFFF">
+<h1 align="center" style="color:#666666">修改消息</h1>
+<div align="center" style="color:#666666 ">
+  <form  th:action="|/notice/${notice.id}|"  th:method="PUT" onSubmit="return f();">
+    <span style="margin-left:-270px; ">ID:&nbsp;
+  <input type="text"  name="id" id="id" th:value="${notice.id}" disabled required /></span><br><br><br>
+  <span style="margin-left:-270px; ">标题:&nbsp;
+  <input type="text"  name="head" id="title" th:value="${notice.head}" /></span>
+  <br><br>
+  内容&nbsp;<br>
+    <textarea cols="60" rows="15" style="margin:20 0  " name="content" id="text" th:text="${notice.content}">请在此处编写文章</textarea>
+  <br><br>
+<br>
+<input type="submit" value="修改" style="margin-left:120px;"/>
+</form>
+  <form th:action="|/notice/${notice.id}|"  th:method="DELETE" style="display: inline-block"><input type="submit" value="删除" /></form>
+</div>
+<script type="text/javascript">
+function f(){
+var n1=document.getElementById("title").value;
+var n2=document.getElementById("text").value;
+if(n1=="")
+{
+alert("标题不能为空!");
+return false;
+}
+if(n2=="")
+{
+alert("内容不能为空!");
+return false;
+}
+return true;
+}
+</script>
+</body>
+</html>

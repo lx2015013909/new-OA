@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>今日心情</title>
+<style type="text/css">
+    .div-a{ float:left;width:40%}
+    .div-b{ float:left;width:59%}
+a:link {
+ text-decoration: none;
+ color:#0000FF;
+}
+a:visited {
+ text-decoration: none;
+ color:#0000FF;
+}
+a:hover {
+color:#000000;
+}
+a:active {
+ text-decoration: none;
+ color:#0000FF;
+}
+</style>
+</head>
+
+<body>
+<div class="div-a">
+    <div id="div1"  align="center">
+         <span>标题:&nbsp;<input type="text"  name="head" id="title"  /></span><br><br><br>
+        <div style="width:800px;" id="div2"><p style="font-family:'微软雅黑 Light';text-align: left "  >从这里开始写今日心情</p></div>
+        <form action="/diary"  method="post" onSubmit="return f();">
+            <input  type="text"  id="head" name="head" style="display:none; ">
+            <input  type="text"  id="content" name="content" style="display:none; "><br>
+            <input  type="submit"  value="提交" >
+        </form><br>
+</div>
+</div>
+
+<div class="div-b">
+<div class="div1"><h3 style="color:#0066CC; font-weight:normal;">今日心情</h3></div>
+<hr>
+<table>
+    <thead>
+    <tr>
+        <th >ID</th>
+        <th >标题</th>
+        <th >发表时间</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="diary : ${diary.getList()}">
+        <td  th:text="${diary.id}"></td>
+        <td>
+            <a th:href="@{/diary/{diaryId}/edit(diaryId=${diary.id})}" th:text="${diary.head}"></a>
+        </td>
+        <td  th:text="${diary.date}"></td>
+    </tr>
+    </tbody>
+</table>
+</div>
+</body>
+<script type="text/javascript" src="/js/wangEditor.js"></script>
+<script type="text/javascript">
+    var E = window.wangEditor;
+    var editor = new E('#div2');
+    editor.create();
+    function f(){
+        document.getElementById("head").value=document.getElementById("title").value;
+        document.getElementById("content").value=editor.txt.text();
+        var n1=document.getElementById("head").value;
+        var n2=document.getElementById("content").value;
+        if(n1.length<=0)
+        {alert("日记标题不能为空!")
+            return false;}
+        if(n2.length<=0)
+        {alert("日记内容不能为空!")
+            return false;}
+        return true;
+    }
+   </script>
+</html>

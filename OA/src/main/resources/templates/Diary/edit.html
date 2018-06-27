@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>wangEditor demo</title>
+</head>
+<body>
+   <div id="div1"  align="center">
+    <div>  <span >ID:&nbsp; <input type="text"  name="id" id="id" th:value="${diary.id}" disabled required /><br><br><br>
+       <span>标题:&nbsp;
+  <input type="text"  name="head" id="title" th:value="${diary.head}" /></span>
+    </div><br><br><br>
+    <div style="width:800px;" id="div2"><p style="font-family:'微软雅黑 Light';text-align: left " th:text="${diary.content}" >从这里开始写今日心情</p></div>
+       <form th:action="|/diary/${diary.id}|"  th:method="PUT" onSubmit="return f();">
+           <input  type="text"  id="head" name="head" style="display:none; ">
+           <input  type="text"  id="content" name="content" style="display:none; "><br>
+           <input  type="submit"  value="修改" >
+       </form><br>
+       <form th:action="|/diary/${diary.id}|"  th:method="DELETE" style="display: inline-block"><input type="submit" value="删除" /></form>
+   </div>
+   </div>
+<script type="text/javascript" src="/js/wangEditor.js"></script>
+<script type="text/javascript">
+    var E = window.wangEditor
+    var editor = new E('#div2')
+    editor.create()
+function f(){
+    document.getElementById("head").value=document.getElementById("title").value;
+	document.getElementById("content").value=editor.txt.text();
+	var n1=document.getElementById("head").value;
+	var n2=document.getElementById("content").value;
+	if(n1.length<=0)
+	{alert("日记标题不能为空!")
+	return false;}
+    if(n2.length<=0)
+    {alert("日记内容不能为空!")
+        return false;}
+	return true;
+	}
+</script>
+</body>
+</html>

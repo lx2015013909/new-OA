@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>公告通知</title>
+<style type="text/css">
+    .div-a{ float:left;width:40%}
+    .div-b{ float:left;width:59%}
+    a:link {
+ text-decoration: none;
+ color:#0000FF;
+}
+a:visited {
+ text-decoration: none;
+ color:#0000FF;
+}
+a:hover {
+ text-decoration: none;
+ color:#0000FF;
+}
+a:active {
+ text-decoration: none;
+ color:#0000FF;
+}
+th{
+    margin-left: 20px;
+}
+    tr{
+        margin-left: 20px;
+    }
+
+</style>
+</head>
+
+<body>
+<div class="div-a">
+    <h1 align="center" style="color:#666666">提交消息</h1>
+    <div align="center" style="color:#666666 ">
+        <form  action="/notice"  method="Post" onSubmit="return f();">
+        <span style="margin-left:-270px; ">标题:&nbsp;
+  <input type="text"  name="head" id="title"  /></span>
+            <br><br>
+            内容&nbsp;<br>
+            <textarea cols="60" rows="15" style="margin:20 0  " name="content" id="text" >请在此处编写文章</textarea>
+            <br><br>
+            <br>
+            <input type="submit" value="提交" style="margin-left:120px;"/>
+        </form>
+    </div>
+    <script type="text/javascript">
+        function f(){
+            var n1=document.getElementById("head").value;
+            var n2=document.getElementById("content").value;
+            if(n1=="")
+            {
+                alert("标题不能为空!");
+                return false;
+            }
+            if(n2=="")
+            {
+                alert("内容不能为空!");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</div>
+<div class="div-b">
+<div class="div1"><h3 style="color:#0066CC; font-weight:normal;">消息总览</h3></div>
+<hr>
+
+<table >
+    <thead>
+    <tr>
+        <th >ID</th>
+        <th >标题</th>
+        <th >发表时间</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="notice : ${notice.getList()}">
+        <td  th:text="${notice.id}"></td>
+        <td>
+            <a th:href="@{/notice/{noticeId}/edit(noticeId=${notice.id})}" th:text="${notice.head}"></a>
+        </td>
+        <td  th:text="${notice.date}"></td>
+    </tr>
+    </tbody>
+</table>
+</div>
+</body>
+</html>
